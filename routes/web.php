@@ -20,6 +20,6 @@ $router->post('/', function (\Illuminate\Http\Request $request) use ($router) {
     if($event["type"] === "ADDED_TO_SPACE" && $event['space']['type'] == 'ROOM'){
         return ["text" => "Thanks for adding me!"];
     } else if( $event["type"] === "MESSAGE"){
-        return ["text" => "dilly dilly!"];
+        return ["text" => $event['message']['text'] . " dilly dilly!"];
     }
 });
