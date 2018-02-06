@@ -14,3 +14,12 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/', function (\Illuminate\Http\Request $request) use ($router) {
+    $event = $request->json()->all();
+    if($event["type"] === "ADDED_TO_SPACE" && $event['space']['type'] == 'ROOM'){
+        return ["text" => "Thanks for adding me!"];
+    } else if( $event["type"] === "MESSAGE"){
+        return ["text" => "dilly dilly!"];
+    }
+});
