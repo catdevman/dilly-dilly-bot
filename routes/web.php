@@ -20,20 +20,14 @@ $router->post('/', function (\Illuminate\Http\Request $request) use ($router) {
     if($event["type"] === "ADDED_TO_SPACE" && $event['space']['type'] == 'ROOM'){
         return ["text" => "Thanks for adding me!"];
     } else if( $event["type"] === "MESSAGE"){
-        error_log(json_encode($event));
-        $response = new \stdClass;
-        $response->sender->displayName = "DillyBot";
-        $response->sender->avatarUrl = "https://goo.gl/aeDtrS";
-        $response->cards = [];
+        $response = [];
+        $response['sender']['displayName'] = "DillyBot";
+        $response['sender']['avatarUrl'] = "https://goo.gl/aeDtrS";
         $header = new \stdClass;
-        $header->title = "DillyBot";
-        $header->subtitle = "dillybot@five-startech.com";
-        $response->cards[] = $header;
-        $keyValue = new \stdClass;
-        $keyValue->topLabel = "Message sent to DillyBot from: " . $event['sender']['displayName'];
-        $keyValue->content = str_replace("@DillyBot", "", $event['message']['text']) . " dilly dilly!"];
-        $response->cards[] = $keyValue;
-        error_log(json_encode($response));
+        $header->header = new \stdClass;
+        $header->header->title = "DillyBot";
+        $header->header->subtitle = str_replace("@DillyBot", "", $event['message']['text']) . " dilly dilly!";
+        $response['cards'][] = $header;
         return $response;
     }
 });
